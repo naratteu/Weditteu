@@ -15,6 +15,7 @@ jobs:
       with:
         path: setup.iss
     - uses: svenstaro/upload-release-action@v2
+      # Github->Settings->Actions->General->Workflow permissions->Read and write permissions 로 설정해야 작동함.
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: Output/WeditteuSetup.exe

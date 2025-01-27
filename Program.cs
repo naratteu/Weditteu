@@ -10,7 +10,7 @@ await using (var stream = File.OpenRead(path))
 {
     var jdoc = await JsonDocument.ParseAsync(stream);
     if (jdoc.RootElement.TryGetProperty("$wdit", out var w))
-        wdit = w.Deserialize<JsonNode>();
+        wdit = JsonNode.Parse(w.GetRawText());
     wdit ??= new JsonObject();
 }
 var obj = wdit switch
