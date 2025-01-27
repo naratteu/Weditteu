@@ -94,7 +94,7 @@
             }
             function saveToFile() {
                 const
-                    j = from({ $wdit: window.location.origin }).save(),
+                    j = from({ $wdit: window.location.href }).save(),
                     a = document.body.appendChild(document.createElement("a")),
                     url = a.href = URL.createObjectURL(new Blob([JSON.stringify(j, null, 2)]));
                 a.download = document.querySelector("input").files[0]?.name ?? `이력서_${j.name}_${new Date().toISOString().split('T')[0]}.json.wdit`;
