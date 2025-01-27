@@ -1,0 +1,265 @@
+<html lang="ko">
+
+<head>
+    <title>이력서</title>
+    <link rel="stylesheet" href="https://kykungz.dev/html-a4-paper/A4.css">
+    <style>
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        section>li {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid;
+            height: calc(4.5cm / 4);
+        }
+
+        td:not(:has(#photo)) {
+            padding: 10px;
+        }
+
+        th {
+            background-color: #999;
+            text-align: center;
+        }
+
+        td:has(#photo) {
+            width: 3.5cm;
+            height: 4.5cm;
+            text-align: center;
+        }
+
+        img {
+            min-width: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            position: relative;
+        }
+
+        img::after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            content: attr(alt);
+            text-align: center;
+        }
+
+        .v-header th {
+            width: 6em;
+        }
+
+        #date {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="no-print" style="text-align: center;">
+        <input class="weditteu" type="file" oninput="loadFromFile(event)" />
+        <button onclick="saveToFile()">저장하기</button>
+        <button onclick="window.print()">인쇄,PDF</button>
+        <script>
+            async function loadFromFile(event) {
+                from(JSON.parse(await read(event.target.files[0]).asText())).load();
+            }
+            function read(file) {
+                const reader = new FileReader(), p = new Promise((resolve, reject) => {
+                    reader.onerror = reject;
+                    reader.onload = () => resolve(reader.result);
+                });
+                return {
+                    asText: () => { reader.readAsText(file); return p; },
+                    asURL: () => { reader.readAsDataURL(file); return p; }
+                };
+            }
+            function saveToFile() {
+                const
+                    j = from({ $wdit: window.location.origin }).save(),
+                    a = document.body.appendChild(document.createElement("a")),
+                    url = a.href = URL.createObjectURL(new Blob([JSON.stringify(j, null, 2)]));
+                a.download = document.querySelector("input").files[0]?.name ?? `이력서_${j.name}_${new Date().toISOString().split('T')[0]}.json.wdit`;
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        </script>
+    </div>
+    <div class="page">
+        <h1 style="text-align: center;letter-spacing: 2em;">이력서</h1>
+
+        <section>
+            <li>인적사항</li>
+            <table class="v-header">
+                <tr>
+                    <td rowspan=4><img id="photo" alt="(사진)" onclick="addPhoto(this)" /></td>
+                    <script>
+                        function addPhoto(img) {
+                            const input = document.body.appendChild(document.createElement('input'));
+                            input.type = 'file';
+                            input.addEventListener("input", async event => {
+                                img.src = await read(event.target.files[0]).asURL();
+                            });
+                            input.click();
+                            document.body.removeChild(input);
+                        }
+                    </script>
+
+                    <th>성명</th>
+                    <td id="name"></td>
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td id="email"></td>
+                </tr>
+                <tr>
+                    <th>휴대폰</th>
+                    <td id="phone"></td>
+                </tr>
+                <tr>
+                    <th>주소</th>
+                    <td id="addr"></td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <li>학력사항</li>
+            <table id="edus">
+                <tr>
+                    <th>기간</th>
+                    <th>학교명</th>
+                    <th>전공(학과)</th>
+                </tr>
+                <tr>
+                    <td id="date">-</td>
+                    <td id="school"></td>
+                    <td id="part"></td>
+                </tr>
+                <tr>
+                    <td id="date">-</td>
+                    <td id="school"></td>
+                    <td id="part"></td>
+                </tr>
+                <tr>
+                    <td id="date">-</td>
+                    <td id="school"></td>
+                    <td id="part"></td>
+                </tr>
+                <tr>
+                    <td id="date">-</td>
+                    <td id="school"></td>
+                    <td id="part"></td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <li>경력사항</li>
+            <table id="career">
+                <tr>
+                    <th>기간</th>
+                    <th>회사명</th>
+                    <th>부서</th>
+                    <th>직위</th>
+                </tr>
+                <tr>
+                    <td id="date">-</td>
+                    <td id="company"></td>
+                    <td id="part"></td>
+                    <td id="class"></td>
+                </tr>
+                <tr>
+                    <td id="date">-</td>
+                    <td id="company"></td>
+                    <td id="part"></td>
+                    <td id="class"></td>
+                </tr>
+                <tr>
+                    <td id="date">-</td>
+                    <td id="company"></td>
+                    <td id="part"></td>
+                    <td id="class"></td>
+                </tr>
+                <tr>
+                    <td id="date">-</td>
+                    <td id="company"></td>
+                    <td id="part"></td>
+                    <td id="class"></td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <li>자기소개</li>
+            <table>
+                <tr>
+                    <td id="self-introduction" style="height:9em; padding: 10px;"></td>
+                </tr>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        for (let td of document.querySelectorAll("td"))
+            td.contentEditable = true;
+        // pre grouping
+        for (let table of document.querySelectorAll("table"))
+            if (table.id)
+                for (let [i, tr] of table.querySelectorAll("tr:not(:first-child)").entries())
+                    for (let td of tr.querySelectorAll("td")) {
+                        td.dataset.table = table.id;
+                        td.dataset.i = i;
+                    }
+        function from(j) {
+            let cp = copy();
+            return {
+                load: () => { for (let p of cp) p.form = p.json ?? ""; },
+                save: () => { for (let p of cp) p.json = p.form; return j; },
+            };
+            function* copy() {
+                let tdid, table, imgid;
+                for (let td of document.querySelectorAll("td"))
+                    if (tdid = td.id)
+                        if (table = td.dataset.table) {
+                            let g = j[table] ??= [];
+                            let row = g[td.dataset.i] ??= {};
+                            yield {
+                                get form() { return td.innerText; }, set form(v) { td.innerText = v; },
+                                get json() { return row[tdid];;;; }, set json(v) { row[tdid] = v; }
+                            };
+                        }
+                        else yield {
+                            get form() { return td.innerText; }, set form(v) { td.innerText = v; },
+                            get json() { return j[tdid];;;;;; }, set json(v) { j[tdid] = v; }
+                        };
+                for (let img of document.querySelectorAll("img"))
+                    if (imgid = img.id) yield {
+                        get form() { return img.src;; }, set form(v) { img.src = v; },
+                        get json() { return j[imgid]; }, set json(v) { j[imgid] = v; }
+                    };
+            }
+        }
+    </script>
+</body>
+
+</html>

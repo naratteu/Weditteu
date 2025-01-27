@@ -1,0 +1,22 @@
+on:
+  push:
+    tags: [ '*' ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+#    - uses: actions/setup-dotnet@v4
+#      with:
+#        dotnet-version: 9.0.x
+    - run: dotnet publish -o bin/pub
+    - uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+      with:
+        path: setup.iss
+    - uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: Output/WeditteuSetup.exe
+        tag: ${{ github.ref }}
+        overwrite: true
