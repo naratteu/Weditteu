@@ -1,0 +1,40 @@
+{
+  "$wdit": "https://naratteu.github.io/mini-qr-for-Weditteu/",
+  "props": {
+    "data": "github.com/naratteu",
+    "image": "https://github.githubassets.com/favicons/favicon.svg",
+    "width": 200,
+    "height": 200,
+    "margin": "",
+    "dotsOptions": {
+      "color": "#24292e",
+      "type": "rounded"
+    },
+    "cornersSquareOptions": {
+      "color": "#24292e",
+      "type": "square"
+    },
+    "cornersDotOptions": {
+      "color": "#24292e",
+      "type": "square"
+    },
+    "imageOptions": { "margin": 4 },
+    "qrOptions": { "errorCorrectionLevel": "H" }
+  },
+  "style": {
+    "borderRadius": "24px",
+    "background": "#ffffff"
+  },
+  "frame": {
+    "text": "github.com/naratteu",
+    "position": "bottom",
+    "style": {
+      "textColor": "#24292e",
+      "backgroundColor": "#ffffff",
+      "borderColor": "#24292e",
+      "borderWidth": "1px",
+      "borderRadius": "8px",
+      "padding": "16px"
+    }
+  }
+}
