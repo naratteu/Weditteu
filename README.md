@@ -18,6 +18,13 @@
 브라우저를 제어하여 `<input>` 태그에 file을 주입하는 과정은 자동화 가능하나,
 `FileSystemHandle` 을 사용자대신 확보하는것에는 실패하여 파일로부터 앱을 열더라도 로컬파일에 직접적으로 접근하려면 `새 이름으로 저장`을 해야합니다.
 
+- https://web.dev/native-file-system
+- https://github.com/Amatewasu/browser-fs-access
+- https://github.com/jimmywarting/native-file-system-adapter
+- https://github.com/chromedp/chromedp/issues/528
+- https://github.com/microsoft/playwright/issues/18267
+- https://github.com/puppeteer/puppeteer/issues/7941
+
 ## Todo
 
 - .xml.wdit
